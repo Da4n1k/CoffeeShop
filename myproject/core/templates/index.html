@@ -1,0 +1,23 @@
+<!-- core/templates/index.html -->
+
+<!-- 1. Загружаем специальный тег для работы со статикой -->
+{% load static %}
+
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Кофейня</title>
+    <!-- 2. Подключаем CSS, используя тег static -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>Hello World :3</h1>
+
+    <!-- 3. Вставляем картинку, используя тег static -->
+    <!-- Замените 'images/test_image.jpg' на имя вашего файла, если оно другое -->
+    <img src="{% static 'images/test_image.jpg' %}" alt="Котик" class="my-image">
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+/* core/static/css/style.css */
+body {
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-top: 50px;
+}
+
+.my-image {
+    border: 5px solid #3498db;
+    border-radius: 10px;
+    width: 300px;
+    margin-top: 20px;
+}

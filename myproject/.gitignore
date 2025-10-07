@@ -1,0 +1,25 @@
+# Файл: .gitignore
+
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Файлы PyCharm
+.idea/
+
+# База данных SQLite
+db.sqlite3
+
+# Статические файлы, собранные Django
+staticfiles/
+
+# Медиафайлы
+mediafiles/
+
+# Кэш Python
+__pycache__/
+*.pyc
+
+# Логи
+*.log
