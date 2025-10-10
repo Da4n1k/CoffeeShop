@@ -1,0 +1,38 @@
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Блок для заголовка, который можно менять на дочерних страницах -->
+    <title>{% block title %}Мой сайт на Django{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- НАШЕ МЕНЮ (НАВИГАЦИЯ) -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">CoffeeShop</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'promo' %}">Бесплатный промокод</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'order' %}">Меню/Заказ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ -->
+    <div class="container page-content">
+        <!-- Этот блок будет заменен содержимым дочерних шаблонов -->
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

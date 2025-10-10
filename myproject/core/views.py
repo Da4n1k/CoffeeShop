@@ -7,3 +7,11 @@ from django.shortcuts import render
 def index(request):
     # Эта функция ищет файл index.html в папке templates
     return render(request, 'index.html')
+
+def order_page(request):
+    # Эта функция ищет файл index.html в папке templates
+    return render(request, 'order.html')
+
+def promo_page(request):
+    # Эта функция ищет файл index.html в папке templates
+    return render(request, 'promo.html')

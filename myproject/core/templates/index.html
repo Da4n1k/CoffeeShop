@@ -1,9 +1,11 @@
 <!-- core/templates/index.html -->
 
 <!-- 1. Загружаем специальный тег для работы со статикой -->
+{% extends 'base.html' %}
 {% load static %}
 
 
+{% block content %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -21,3 +23,4 @@
 
 </body>
 </html>
+{% endblock %}
