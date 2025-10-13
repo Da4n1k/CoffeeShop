@@ -121,3 +121,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# URL, по которому можно будет получить доступ к медиа-файлам в браузере
+MEDIA_URL = '/media/'
+
+# Путь в файловой системе, где будут храниться загруженные файлы
+# BASE_DIR - это корень вашего проекта
+MEDIA_ROOT = BASE_DIR / 'media'

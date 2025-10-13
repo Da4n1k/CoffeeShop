@@ -69,3 +69,74 @@ h1 {
 .nav-link:hover {
     background-color: #555;
 }
+
+.product-grid {
+    display: grid;
+    /* Создаем колонки, которые занимают равное место (1fr),
+       но не меньше 280px. Они будут автоматически переноситься. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; /* Отступы между карточками */
+    margin-top: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden; /* Скрываем все, что выходит за рамки */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Приподнимаем карточку при наведении */
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Масштабирует картинку, сохраняя пропорции */
+}
+
+.product-card-body {
+    padding: 1.5rem;
+    flex-grow: 1; /* Позволяет этому блоку занять все доступное место */
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #555;
+    flex-grow: 1; /* Описание растягивается, прижимая цену к низу */
+    margin-bottom: 1rem;
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.btn-order {
+    background-color: #55aaff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.btn-order:hover {
+    background-color: #3e8acc;
+}
