@@ -1,6 +1,6 @@
 Советую использовать Github Desktop, сначала качаем git, потом Github Desktop, клонируем этот репозиторий в удобное место
 0. создать виртуальное окружение питона, если не создано автоматически 
-1. pip install django
+1. pip install -r requirements.txt
 2. нужно открыть терминал на папке myproject
 3. python manage.py migrate
 4. python manage.py createsuperuser
