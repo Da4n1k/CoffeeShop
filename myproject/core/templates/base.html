@@ -1,40 +1,160 @@
-
 {% load static %}
-
+<!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Блок для заголовка, который можно менять на дочерних страницах -->
-    <title>{% block title %}Мой сайт на Django{% endblock %}</title>
+    <meta name="description"
+        content="CupOfSoul - Уютная кофейня с лучшим кофе в городе. Свежая обжарка, авторские напитки и теплая атмосфера.">
+
+    <title>{% block title %}CupOfSoul - Кофейня с душой{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Main Styles -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- React CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
 <body>
+    <!-- React Navbar Container -->
+    <div id="navbar-root"></div>
 
-    <!-- НАШЕ МЕНЮ (НАВИГАЦИЯ) -->
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">CupOfSoul</a>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'promo' %}">Бесплатный промокод</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'order' %}">Меню/Заказ</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ -->
-    <div class="container page-content">
-        <!-- Этот блок будет заменен содержимым дочерних шаблонов -->
+    <!-- Main Content -->
+    <main class="page-content">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
 
+    <!-- React Footer Container -->
+    <div id="footer-root"></div>
+
+    <!-- React Navbar Component -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Navbar Component
+        function Navbar() {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const toggleMobileMenu = () => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+            };
+
+            const navLinks = [
+                { href: "/", label: "Главная", icon: "🏠" },
+                { href: "/promo/", label: "Промокод", icon: "🎁" },
+                { href: "/order/", label: "Меню", icon: "☕" },
+                { href: "#", label: "Корзина", icon: "🛒" }
+            ];
+
+            return (
+                <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+                    <div className="container">
+                        <a href="{% url 'index' %}" className="navbar-brand">
+                            <span className="coffee-icon">☕</span>
+                            CupOfSoul
+                        </a>
+
+                        <ul className={`navbar-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+                            {navLinks.map((link, index) => (
+                                <li key={index} className="nav-item">
+                                    <a href={link.href} className="nav-link">
+                                        <span className="nav-icon">{link.icon}</span>
+                                        {link.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <button
+                            className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+                            onClick={toggleMobileMenu}
+                            aria-label="Меню"
+                        >
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </nav>
+            );
+        }
+
+        // Footer Component
+        function Footer() {
+            return (
+                <footer className="footer">
+                    <div className="container">
+                        <div className="footer-content">
+                            <div className="footer-brand">
+                                <div className="logo">
+                                    <span>☕</span> CupOfSoul
+                                </div>
+                                <p>
+                                    Мы создаём не просто кофе — мы создаём моменты счастья.
+                                    Каждая чашка наполнена заботой и вниманием к деталям.
+                                </p>
+                            </div>
+
+                            <div className="footer-links">
+                                <h5>Навигация</h5>
+                                <ul>
+                                    <li><a href="{% url 'index' %}">Главная</a></li>
+                                    <li><a href="{% url 'order' %}">Наше меню</a></li>
+                                    <li><a href="{% url 'promo' %}">Акции</a></li>
+                                </ul>
+                            </div>
+
+                            <div className="footer-contact">
+                                <h5>Контакты</h5>
+                                <p>📍 ул. Кофейная, 42</p>
+                                <p>📞 +7 (999) 123-45-67</p>
+                                <p>✉️ hello@cupofsoul.ru</p>
+                                <p>🕐 Ежедневно: 8:00 - 22:00</p>
+
+                                <div className="social-links">
+                                    <a href="#" className="social-link" aria-label="Telegram">📱</a>
+                                    <a href="#" className="social-link" aria-label="Instagram">📷</a>
+                                    <a href="#" className="social-link" aria-label="VK">💬</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="footer-bottom">
+                            <p>© 2026 CupOfSoul. Все права защищены. Сделано с ❤️ и ☕</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+
+        // Render Components
+        const navbarRoot = ReactDOM.createRoot(document.getElementById('navbar-root'));
+        navbarRoot.render(<Navbar />);
+
+        const footerRoot = ReactDOM.createRoot(document.getElementById('footer-root'));
+        footerRoot.render(<Footer />);
+    </script>
 </body>
+
 </html>
