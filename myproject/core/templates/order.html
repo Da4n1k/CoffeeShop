@@ -1,26 +1,27 @@
-<!DOCTYPE html>
-<!-- core/templates/order.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Меню и Заказ{% endblock %}
 
 {% block content %}
-<div class="product-grid">
-    {% for product in products %}
-    <div class="product-card">
-        <!-- Главное изображение, с двумя дополнительными атрибутами -->
-        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}"
-            data-original-src="{{ product.image.url }}" {% if product.image_hover %}
-            data-hover-src="{{ product.image_hover.url }}" {% endif %}>
-        <div class="product-card-body">
-            <h3 class="product-title">{{ product.title }}</h3>
-            <p class="product-description">{{ product.description }}</p>
-            <p class="product-price">{{ product.price }} руб.</p>
-            <button class="btn-order">Заказать</button>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
+            <div class="product-card-body">
+                <h3 class="product-title">{{ product.title }}</h3>
+                <p class="product-description">{{ product.description }}</p>
+                <p class="product-price">{{ product.price }} руб.</p>
+                
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-order">Заказать</button>
+                </form>
+            </div>
         </div>
     </div>
-    {% endfor %}
-</div>
-<script src="{% static 'JS/product_hover.js' %}"></script>
+
+    {% block scripts %}
+    <script src="{% static 'JS/product_hover.js' %}"></script>
+    {% endblock %}
 {% endblock %}

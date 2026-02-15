@@ -1,10 +1,11 @@
-# core/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Пустая строка '' означает главную страницу
     path('', views.index, name='index'),
-    path('promo/', views.promo_page, name='promo'),
     path('order/', views.order_page, name='order'),
+    path('promo/', views.promo_page, name='promo'),
+    path('cart/', views.cart_page, name='cart'),
+    # Теперь это обычный путь для формы
+    path('add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
 ]
