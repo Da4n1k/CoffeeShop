@@ -6,26 +6,21 @@
 {% block title %}Меню и Заказ{% endblock %}
 
 {% block content %}
-     <div class="product-grid">
-        {% for product in products %}
-        <div class="product-card">
-            <!-- Главное изображение, с двумя дополнительными атрибутами -->
-            <img class="product-image"
-                 src="{{ product.image.url }}"
-                 alt="{{ product.title }}"
-                 data-original-src="{{ product.image.url }}"
-                 {% if product.image_hover %}
-                 data-hover-src="{{ product.image_hover.url }}"
-                 {% endif %}
-            >
-            <div class="product-card-body">
-                <h3 class="product-title">{{ product.title }}</h3>
-                <p class="product-description">{{ product.description }}</p>
-                <p class="product-price">{{ product.price }} руб.</p>
-                <button class="btn-order">Заказать</button>
-            </div>
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <!-- Главное изображение, с двумя дополнительными атрибутами -->
+        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}"
+            data-original-src="{{ product.image.url }}" {% if product.image_hover %}
+            data-hover-src="{{ product.image_hover.url }}" {% endif %}>
+        <div class="product-card-body">
+            <h3 class="product-title">{{ product.title }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <p class="product-price">{{ product.price }} руб.</p>
+            <button class="btn-order">Заказать</button>
         </div>
-        {% endfor %}
     </div>
-    <script src="{% static 'JS/product_hover.js' %}"></script>
+    {% endfor %}
+</div>
+<script src="{% static 'JS/product_hover.js' %}"></script>
 {% endblock %}
