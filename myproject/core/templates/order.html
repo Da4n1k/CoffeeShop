@@ -4,24 +4,25 @@
 {% block title %}Меню и Заказ{% endblock %}
 
 {% block content %}
-    <div class="product-grid">
-        {% for product in products %}
-        <div class="product-card">
-            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
-            <div class="product-card-body">
-                <h3 class="product-title">{{ product.title }}</h3>
-                <p class="product-description">{{ product.description }}</p>
-                <p class="product-price">{{ product.price }} руб.</p>
-                
-                <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-order">Заказать</button>
-                </form>
-            </div>
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
+        <div class="product-card-body">
+            <h3 class="product-title">{{ product.title }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <p class="product-price">{{ product.price }} руб.</p>
+
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-order">Заказать</button>
+            </form>
         </div>
     </div>
+    {% endfor %}
+</div>
+{% endblock %}
 
-    {% block scripts %}
-    <script src="{% static 'JS/product_hover.js' %}"></script>
-    {% endblock %}
+{% block scripts %}
+<script src="{% static 'JS/product_hover.js' %}"></script>
 {% endblock %}
