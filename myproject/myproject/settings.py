@@ -116,6 +116,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Добавь это, если этого нет:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -127,3 +132,7 @@ MEDIA_URL = '/media/'
 # Путь в файловой системе, где будут храниться загруженные файлы
 # BASE_DIR - это корень вашего проекта
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Настройки сессий (в конец settings.py)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_SAVE_EVERY_REQUEST = True

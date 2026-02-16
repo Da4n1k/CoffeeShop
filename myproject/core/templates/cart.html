@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+<<<<<<< Updated upstream
 
 {% block title %}Ваша Корзина{% endblock %}
 
@@ -42,4 +43,58 @@
         </div>
     {% endif %}
 
+=======
+{% load static %}
+
+{% block title %}Ваша корзина - CupOfSoul{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 100px; min-height: 60vh;">
+    <h1 style="text-align: center; margin-bottom: 40px; color: #2D2D2D;">Ваша корзина</h1>
+
+    <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        {% if cart_items %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #f4f4f4; text-align: left; color: #888;">
+                        <th style="padding: 15px 0;">Напиток</th>
+                        <th>Кол-во</th>
+                        <th>Цена</th>
+                        <th style="text-align: right;">Сумма</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr style="border-bottom: 1px solid #f4f4f4;">
+                        <td style="padding: 20px 0; font-weight: 600; font-size: 1.1rem;">
+                            {{ item.product.name }}
+                        </td>
+                        <td style="color: #666;">{{ item.quantity }} шт.</td>
+                        <td style="color: #666;">{{ item.product.price }} ₽</td>
+                        <td style="text-align: right; font-weight: bold; color: #D4A574;">
+                            {{ item.total_price }} ₽
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div style="margin-top: 30px; text-align: right; border-top: 2px solid #2D2D2D; padding-top: 20px;">
+                <h2 style="color: #2D2D2D;">Итого: <span style="color: #D4A574;">{{ total_price }} ₽</span></h2>
+                <div style="margin-top: 20px;">
+                    <a href="/" style="text-decoration: none; color: #888; margin-right: 20px;">← Вернуться в меню</a>
+                    <button style="background: #2D2D2D; color: white; border: none; padding: 15px 30px; border-radius: 30px; cursor: pointer; font-weight: bold;">
+                        Оформить заказ
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 40px;">
+                <p style="font-size: 1.2rem; color: #888;">Ваша корзина пуста :(</p>
+                <a href="/" style="display: inline-block; margin-top: 20px; background: #D4A574; color: white; padding: 10px 25px; border-radius: 20px; text-decoration: none;">Перейти к выбору кофе</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+>>>>>>> Stashed changes
 {% endblock %}

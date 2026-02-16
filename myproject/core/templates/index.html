@@ -4,258 +4,33 @@
 {% block title %}CupOfSoul - Кофейня с душой{% endblock %}
 
 {% block content %}
-<!-- Стили для видео-секции -->
 <style>
-    /* Контейнер для видео-анимации */
-    .video-menu-section {
-        position: relative;
-        height: 500vh;
-        /* Высота для скролла через 4 кофе */
-    }
-
+    .video-menu-section { position: relative; height: 500vh; }
     .video-sticky-wrapper {
-        position: sticky;
-        top: 80px;
-        height: calc(100vh - 80px);
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+        position: sticky; top: 80px; height: calc(100vh - 80px);
+        overflow: hidden; display: flex; align-items: center;
+        justify-content: center; background: #1A1A1A;
     }
-
-    .scroll-video {
-        width: 100%;
-        max-width: 900px;
-        height: auto;
-        object-fit: contain;
-    }
-
-    /* Единый блок информации о кофе (справа внутри видео) */
+    .scroll-video { width: 100%; max-width: 900px; height: auto; }
     .coffee-info-single {
-        position: absolute;
-        right: 5%;
-        top: 120px;
-        width: 300px;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-        background: rgba(20, 15, 10, 0.92);
-        backdrop-filter: blur(12px);
-        padding: 1rem;
-        border-radius: 14px;
-        border: 1px solid rgba(212, 165, 116, 0.3);
-        text-align: left;
-        z-index: 20;
+        position: absolute; right: 5%; top: 120px; width: 300px; opacity: 0;
+        transition: all 0.5s ease; background: rgba(0,0,0,0.8);
+        padding: 20px; border-radius: 15px; color: white; border: 1px solid #D4A574;
     }
-
-    .coffee-info-single.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .coffee-price-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 1rem;
-        gap: 1rem;
-    }
-
-    .video-coffee-name {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(1.8rem, 3vw, 2.5rem);
-        color: #D4A574;
-        margin-bottom: 0.75rem;
-    }
-
-    .video-coffee-description {
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.85);
-        line-height: 1.6;
-        margin-bottom: 1.25rem;
-    }
-
-    .video-coffee-price {
-        font-family: 'Playfair Display', serif;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #C9A961;
-        margin-bottom: 1rem;
-    }
-
+    .coffee-info-single.visible { opacity: 1; }
     .video-btn-buy {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.875rem 1.75rem;
-        background: linear-gradient(135deg, #D4A574, #A0522D);
-        color: white;
-        border: none;
-        border-radius: 30px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 20px rgba(212, 165, 116, 0.4);
-        text-decoration: none;
-    }
-
-    .video-btn-buy:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 30px rgba(212, 165, 116, 0.6);
-    }
-
-    /* Индикатор текущего кофе */
-    .coffee-indicators {
-        position: fixed;
-        top: 50%;
-        right: 25px;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        z-index: 100;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        pointer-events: none;
-    }
-
-    .coffee-indicators.visible {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .coffee-indicator {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.25);
-        transition: all 0.4s ease;
-        cursor: pointer;
-        border: 2px solid transparent;
-    }
-
-    .coffee-indicator.active {
-        background: #D4A574;
-        transform: scale(1.4);
-        border-color: rgba(255, 255, 255, 0.5);
-    }
-
-    .coffee-indicator:hover {
-        background: rgba(212, 165, 116, 0.6);
-    }
-
-    /* Заголовок секции */
-    .video-section-header {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        z-index: 10;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-    .video-section-header.visible {
-        opacity: 1;
-    }
-
-    .video-section-badge {
-        display: inline-block;
-        padding: 0.5rem 1.25rem;
-        background: linear-gradient(135deg, #D4A574, #A0522D);
-        border-radius: 30px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: white;
-        margin-bottom: 0.5rem;
-    }
-
-    .video-section-title {
-        display: inline-block;
-        padding: 0.6rem 1.5rem;
-        background: linear-gradient(135deg, #D4A574, #A0522D);
-        border-radius: 30px;
-        font-family: 'Playfair Display', serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: white;
-    }
-
-    /* Подсказка скролла */
-    .video-scroll-hint {
-        position: absolute;
-        bottom: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.85rem;
-        text-align: center;
-        animation: bounceHint 2s ease-in-out infinite;
-        transition: opacity 0.5s ease;
-    }
-
-    .video-scroll-hint span {
-        display: block;
-        font-size: 1.25rem;
-        margin-bottom: 0.25rem;
-    }
-
-    @keyframes bounceHint {
-
-        0%,
-        100% {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        50% {
-            transform: translateX(-50%) translateY(-8px);
-        }
-    }
-
-    /* Адаптивность */
-    @media (max-width: 992px) {
-        .coffee-video-overlay {
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-bottom: 80px;
-        }
-
-        .coffee-info-panel {
-            max-width: 90%;
-            text-align: center !important;
-        }
-
-        .coffee-info-panel.left {
-            display: none;
-        }
-
-        .coffee-indicators {
-            right: 15px;
-        }
+        background: #D4A574; color: white; border: none; 
+        padding: 10px 20px; border-radius: 20px; cursor: pointer;
     }
 </style>
 
-<!-- React App Container -->
 <div id="home-root"></div>
 
-<!-- Секция видео-меню (отдельно от React) -->
 <div class="video-menu-section" id="videoMenuSection">
     <div class="video-sticky-wrapper">
-        <!-- Заголовок -->
-        <div class="video-section-header" id="videoSectionHeader">
-            <h2 class="video-section-title">Популярные напитки</h2>
-        </div>
-
-        <!-- Изображение (управляется скроллом) -->
         <img id="scrollImage" class="scroll-video" src="{% static 'video/frames/seq_0001.webp' %}" alt="Кофе">
-
-        <!-- Информация о кофе (единый блок справа) -->
         <div class="coffee-info-single" id="coffeeInfoPanel">
+<<<<<<< Updated upstream
             <h3 class="video-coffee-name" id="coffeeName">Капучино</h3>
             <p class="video-coffee-description" id="coffeeDescription">
                 Классический итальянский напиток с идеальным балансом эспрессо и молочной пенки.
@@ -263,209 +38,58 @@
             <div class="coffee-price-row">
                 <div class="video-coffee-price" id="coffeePrice">249 ₽</div>
                 <a href="/order/" class="video-btn-buy">🛒 В корзину</a>
+=======
+            <h3 id="coffeeName" style="color: #D4A574;">Капучино</h3>
+            <p id="coffeeDescription"></p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <span id="coffeePrice" style="font-weight: bold; font-size: 1.2rem;"></span>
+                <button class="video-btn-buy btn-order" id="videoBuyBtn" data-product-id="1">🛒 В корзину</button>
+>>>>>>> Stashed changes
             </div>
         </div>
-
-        <!-- Подсказка скролла -->
-        <div class="video-scroll-hint" id="videoScrollHint">
-            <span>⬇️</span>
-            Скролл для просмотра меню
-        </div>
-    </div>
-
-    <!-- Индикаторы кофе -->
-    <div class="coffee-indicators" id="coffeeIndicators">
-        <div class="coffee-indicator active" data-index="0"></div>
-        <div class="coffee-indicator" data-index="1"></div>
-        <div class="coffee-indicator" data-index="2"></div>
-        <div class="coffee-indicator" data-index="3"></div>
     </div>
 </div>
 
-<!-- Скрипт управления анимацией -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const image = document.getElementById('scrollImage');
         const container = document.getElementById('videoMenuSection');
-        const coffeeInfoPanel = document.getElementById('coffeeInfoPanel');
-        const coffeeName = document.getElementById('coffeeName');
-        const coffeeDescription = document.getElementById('coffeeDescription');
-        const coffeePrice = document.getElementById('coffeePrice');
-        const scrollHint = document.getElementById('videoScrollHint');
-        const sectionHeader = document.getElementById('videoSectionHeader');
-        const indicatorsContainer = document.getElementById('coffeeIndicators');
-        const indicators = document.querySelectorAll('.coffee-indicator');
-
+        const buyBtn = document.getElementById('videoBuyBtn');
+        
         const coffees = [
-            {
-                name: "Капучино",
-                description: "Классический итальянский напиток с идеальным балансом эспрессо и молочной пенки.",
-                price: "249 ₽"
-            },
-            {
-                name: "Латте",
-                description: "Нежный кофейный напиток с большим количеством взбитого молока и мягким вкусом.",
-                price: "279 ₽"
-            },
-            {
-                name: "Флэт Уайт",
-                description: "Крепкий австралийский кофе с бархатистой микропеной и насыщенным вкусом.",
-                price: "299 ₽"
-            },
-            {
-                name: "Раф",
-                description: "Авторский русский кофе со сливками и ванильным сахаром. Нежный и сладкий.",
-                price: "319 ₽"
-            }
+            { id: "1", name: "Капучино", price: "249 ₽", desc: "Классический баланс." },
+            { id: "2", name: "Латте", price: "279 ₽", desc: "Мягкий молочный вкус." },
+            { id: "3", name: "Флэт Уайт", price: "299 ₽", desc: "Насыщенный кофейный вкус." },
+            { id: "4", name: "Раф", price: "319 ₽", desc: "Сливочная нежность." }
         ];
 
-        // Параметры анимации
-        const TOTAL_FRAMES = 105;
-        const IMAGE_BASE_PATH = '/static/video/frames/seq_';
+        window.addEventListener('scroll', () => {
+            const rect = container.getBoundingClientRect();
+            const progress = Math.max(0, Math.min(1, -rect.top / (container.offsetHeight - window.innerHeight)));
+            
+            // Анимация кадров
+            const frame = Math.floor(progress * 104) + 1;
+            const frameStr = String(frame).padStart(4, '0');
+            image.src = `/static/video/frames/seq_${frameStr}.webp`;
 
-        let currentCoffeeIndex = -1;
-        let lastFrameIndex = -1;
-        let ticking = false;
-        let imagesLoaded = 0;
-        let isReady = false;
+            // Обновление инфо
+            let idx = progress > 0.75 ? 3 : progress > 0.5 ? 2 : progress > 0.25 ? 1 : 0;
+            document.getElementById('coffeeName').textContent = coffees[idx].name;
+            document.getElementById('coffeePrice').textContent = coffees[idx].price;
+            document.getElementById('coffeeDescription').textContent = coffees[idx].desc;
+            buyBtn.setAttribute('data-product-id', coffees[idx].id);
 
-        // Предзагрузка изображений
-        const frameImages = [];
-
-        function preloadImages() {
-            console.log('Начинаем предзагрузку ' + TOTAL_FRAMES + ' кадров...');
-
-            for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                const img = new Image();
-                const frameNum = String(i).padStart(4, '0');
-                img.src = IMAGE_BASE_PATH + frameNum + '.webp';
-
-                img.onload = () => {
-                    imagesLoaded++;
-                    if (imagesLoaded === TOTAL_FRAMES) {
-                        console.log('Все кадры загружены!');
-                        isReady = true;
-                        handleScroll();
-                    }
-                };
-
-                img.onerror = () => {
-                    console.error('Ошибка загрузки кадра:', i);
-                };
-
-                frameImages.push(img);
-            }
-
-            // Разрешаем работу сразу после загрузки первых кадров
-            setTimeout(() => {
-                if (!isReady && imagesLoaded > 10) {
-                    isReady = true;
-                    handleScroll();
-                }
-            }, 500);
-        }
-
-        function updateCoffeeInfo(index) {
-            if (index !== currentCoffeeIndex && index >= 0 && index < coffees.length) {
-                currentCoffeeIndex = index;
-
-                coffeeName.textContent = coffees[index].name;
-                coffeeDescription.textContent = coffees[index].description;
-                coffeePrice.textContent = coffees[index].price;
-
-                // Обновляем индикаторы
-                indicators.forEach((ind, i) => {
-                    ind.classList.toggle('active', i === index);
-                });
-            }
-        }
-
-        function handleScroll() {
-            if (!isReady) return;
-
-            const containerRect = container.getBoundingClientRect();
-            const containerTop = -containerRect.top;
-            const containerHeight = container.offsetHeight - window.innerHeight;
-
-            let scrollProgress = containerTop / containerHeight;
-            scrollProgress = Math.max(0, Math.min(1, scrollProgress));
-
-            // Вычисляем номер кадра (1-105)
-            const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(scrollProgress * TOTAL_FRAMES));
-
-            // Обновляем изображение только если кадр изменился
-            if (frameIndex !== lastFrameIndex && frameImages[frameIndex]) {
-                lastFrameIndex = frameIndex;
-                image.src = frameImages[frameIndex].src;
-            }
-
-            // Определяем какой кофе показывать на основе кадра
-            // Кадры 1-14: Капучино, 15-37: Латте, 38-68: Флэт Уайт, 69-105: Раф
-            let coffeeIndex = 0;
-            if (frameIndex >= 68) {
-                coffeeIndex = 3; // Раф (кадры 69-105)
-            } else if (frameIndex >= 37) {
-                coffeeIndex = 2; // Флэт Уайт (кадры 38-68)
-            } else if (frameIndex >= 14) {
-                coffeeIndex = 1; // Латте (кадры 15-37)
-            } else {
-                coffeeIndex = 0; // Капучино (кадры 1-14)
-            }
-            updateCoffeeInfo(coffeeIndex);
-
-            // Показываем/скрываем элементы
-            if (scrollProgress > 0.02) {
-                coffeeInfoPanel.classList.add('visible');
-                if (indicatorsContainer) indicatorsContainer.classList.add('visible');
-                if (sectionHeader) sectionHeader.classList.add('visible');
-                if (scrollHint) scrollHint.style.opacity = '0';
-            } else {
-                coffeeInfoPanel.classList.remove('visible');
-                if (indicatorsContainer) indicatorsContainer.classList.remove('visible');
-                if (sectionHeader) sectionHeader.classList.remove('visible');
-                if (scrollHint) scrollHint.style.opacity = '1';
-            }
-
-            ticking = false;
-        }
-
-        // Оптимизированный обработчик скролла
-        function onScroll() {
-            if (!ticking) {
-                requestAnimationFrame(handleScroll);
-                ticking = true;
-            }
-        }
-
-        // Клик по индикаторам - переход к нужному кадру
-        // Центры: Капучино=кадр 7, Латте=кадр 25, Флэт Уайт=кадр 52, Раф=кадр 85
-        const indicatorFrames = [7, 25, 52, 85];
-        indicators.forEach(indicator => {
-            indicator.addEventListener('click', function () {
-                const index = parseInt(this.dataset.index);
-                const targetFrame = indicatorFrames[index] || 0;
-                const containerHeight = container.offsetHeight - window.innerHeight;
-                const containerTop = container.offsetTop;
-                const targetScroll = containerTop + ((targetFrame / TOTAL_FRAMES) * containerHeight);
-
-                window.scrollTo({
-                    top: targetScroll,
-                    behavior: 'smooth'
-                });
-            });
+            // Показ панели
+            const panel = document.getElementById('coffeeInfoPanel');
+            if (progress > 0.02) panel.classList.add('visible');
+            else panel.classList.remove('visible');
         });
-
-        // Инициализация
-        preloadImages();
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        // Первоначальная обработка
-        setTimeout(handleScroll, 300);
     });
 </script>
 
 {% verbatim %}
 <script type="text/babel">
+<<<<<<< Updated upstream
     const { useState, useEffect } = React;
 
     // Hero Section Component
@@ -616,48 +240,23 @@
 
     const root = ReactDOM.createRoot(document.getElementById('home-root'));
     root.render(<App />);
+=======
+    const App = () => (
+        <section className="hero">
+            <div className="hero-content">
+                <h1>CupOfSoul</h1>
+                <p>Кофе, который согревает сердце</p>
+            </div>
+        </section>
+    );
+    ReactDOM.createRoot(document.getElementById('home-root')).render(<App />);
+>>>>>>> Stashed changes
 </script>
 {% endverbatim %}
 
-<!-- Секция О нас после видео -->
-<div id="about-root"></div>
-<script type="text/babel">
-    function AboutSection() {
-        return (
-            <section className="features about-section">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-badge">О нас</span>
-                        <h2 className="text-white">История CupOfSoul</h2>
-                        <p className="text-white-muted">
-                            Мы начали свой путь с простой идеей —
-                            создавать кофе, который согревает не только тело, но и душу.
-                        </p>
-                    </div>
+{% endblock %}
 
-                    <div className="features-grid">
-                        <div className="feature-card">
-                            <div className="feature-icon">🎯</div>
-                            <h4>Наша миссия</h4>
-                            <p>Дарить людям моменты радости через идеальную чашку кофе каждый день</p>
-                        </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🌍</div>
-                            <h4>Наши зёрна</h4>
-                            <p>Отбираем лучшие зёрна из Эфиопии, Колумбии и Бразилии</p>
-                        </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">💚</div>
-                            <h4>Экологичность</h4>
-                            <p>Используем перерабатываемые материалы и поддерживаем фермеров</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
-
-    const aboutRoot = ReactDOM.createRoot(document.getElementById('about-root'));
-    aboutRoot.render(<AboutSection />);
-</script>
+{% block scripts %}
+    {% csrf_token %}
+    <script src="{% static 'JS/cart.js' %}"></script>
 {% endblock %}

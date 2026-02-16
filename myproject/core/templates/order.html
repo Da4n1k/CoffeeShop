@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Меню и Заказ{% endblock %}
-
 {% block content %}
+{% csrf_token %}
 <div class="product-grid">
     {% for product in products %}
     <div class="product-card">
+<<<<<<< Updated upstream
         <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
         <div class="product-card-body">
             <h3 class="product-title">{{ product.title }}</h3>
@@ -17,6 +17,15 @@
                 {% csrf_token %}
                 <button type="submit" class="btn-order">Заказать</button>
             </form>
+=======
+        <img class="product-image" src="{{ product.image.url }}" 
+             data-original-src="{{ product.image.url }}"
+             {% if product.image_hover %} data-hover-src="{{ product.image_hover.url }}" {% endif %}>
+        <div class="product-card-body">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price }} руб.</p>
+            <button class="btn-order" data-product-id="{{ product.id }}">Заказать</button>
+>>>>>>> Stashed changes
         </div>
     </div>
     {% endfor %}
@@ -24,5 +33,10 @@
 {% endblock %}
 
 {% block scripts %}
+<<<<<<< Updated upstream
 <script src="{% static 'JS/product_hover.js' %}"></script>
+=======
+    <script src="{% static 'JS/product_hover.js' %}"></script>
+    <script src="{% static 'JS/cart.js' %}"></script>
+>>>>>>> Stashed changes
 {% endblock %}
