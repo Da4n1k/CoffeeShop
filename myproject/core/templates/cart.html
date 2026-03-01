@@ -27,13 +27,52 @@
             </tbody>
         </table>
 
-        <div class="cart-summary">
-            <h2>Итого к оплате: <span id="grand-total">{{ grand_total }}</span> руб.</h2>
-            <div class="cart-actions">
-                <a href="{% url 'order' %}" class="btn-back">← Вернуться в меню</a>
-                <button class="btn-checkout">Оформить заказ</button>
-            </div>
+<div style="margin: var(--spacing-lg) 0;">
+    <form method="post" action="{% url 'apply_promo' %}" 
+          style="display:flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+
+        {% csrf_token %}
+
+        <input 
+            type="text" 
+            name="promo_code" 
+            placeholder="Введите промокод"
+            style="
+                flex:1;
+                min-width:220px;
+                padding: var(--spacing-sm);
+                border-radius: var(--radius-xl);
+                border: 2px solid var(--color-accent-light);
+                font-family: var(--font-body);
+                font-size: 1rem;
+            "
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Применить
+        </button>
+
+    </form>
         </div>
+
+            {% if discount %}
+                <p style="color: green; margin-top: 10px;">
+                    🎉 Промокод применён! Скидка {{ discount }}%
+                </p>
+            {% endif %}
+
+            <div class="cart-summary">
+                <h2>Итого к оплате: <span id="grand-total">{{ grand_total }}</span> руб.</h2>
+                <div class="cart-actions">
+                    <a href="{% url 'order' %}" class="btn btn-secondary">← Вернуться в меню</a>
+
+                    <form method="post" action="{% url 'checkout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">
+                            Оформить заказ
+                        </button>
+                    </form>
+            </div>
 
     {% else %}
         <div class="empty-cart-message">

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ оформлен{% endblock %}
+
+{% block content %}
+
+<div style="text-align:center; margin-top: var(--spacing-2xl);">
+    
+    <h2 style="margin-bottom: var(--spacing-md);">
+        ✅ Заказ успешно оформлен!
+    </h2>
+
+    <p style="margin-bottom: var(--spacing-lg);">
+        Спасибо за ваш заказ ☕ Мы уже начинаем готовить.
+    </p>
+
+    <a href="{% url 'order' %}" class="btn btn-primary">
+        Вернуться в меню
+    </a>
+
+</div>
+
+{% endblock %}
