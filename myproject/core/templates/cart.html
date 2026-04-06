@@ -5,6 +5,12 @@
 {% block content %}
     <h1>🛒 Ваша Корзина</h1>
 
+    {% if coupon_message %}
+        <div style="padding: 12px 20px; margin-bottom: 20px; border-radius: 10px; background: linear-gradient(135deg, rgba(34,139,34,0.15), rgba(34,139,34,0.05)); border: 1px solid rgba(34,139,34,0.3); color: #2ecc71; font-size: 1.1rem;">
+            {{ coupon_message }}
+        </div>
+    {% endif %}
+
     {% if cart_items %}
         <table class="cart-table">
             <thead>

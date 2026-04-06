@@ -30,6 +30,17 @@ def add_to_cart(request, product_id):
     return redirect('order')
 
 def cart_page(request):
+    # Автоматическое применение купона из GET-параметра (?coupon=GAME2026)
+    coupon_code = request.GET.get('coupon', '')
+    coupon_message = ''
+    if coupon_code:
+        if coupon_code == 'GAME2026':
+            request.session['discount'] = 20
+            request.session.modified = True
+            coupon_message = f'🎮 Купон {coupon_code} активирован! Скидка 20%'
+        else:
+            coupon_message = '❌ Неверный купон'
+
     cart = request.session.get('cart', {})
     cart_items = []
     grand_total = 0
@@ -64,7 +75,8 @@ def cart_page(request):
         'cart_items': cart_items,
         'grand_total': grand_total,
         'total_items': total_items,
-        'discount': discount
+        'discount': discount,
+        'coupon_message': coupon_message,
     })
 
 def apply_promo(request):
